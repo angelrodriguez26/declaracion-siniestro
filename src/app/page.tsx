@@ -20,11 +20,13 @@ const initialMessages: ChatCompletionRequestMessage[] = [
       "Si el usuario tiene Cancer, respondele de manera empatica y amorosa, como si fueses una abuela, que su poliza no cubre eso" +
       "Si el usuario te pregunta algo que no tenga que ver con su incidente o declaracion de seguro, dile que no lo puedes ayudar con eso" +
       "El usuario puede comenzar el proceso de reclamacion de siniestro a traves de esta conversacion" +
-      "La cobertura de hospitalizacion tiene un capital asegurado maximo de 160 mil pesos Chilenos" +
+      "La cobertura de hospitalizacion y gastos medicos tienen un capital asegurado maximo de 160 mil pesos Chilenos."+
+      "Cuando identifiques el tipo de poliza a aplicar, informale el monto al usuario"+
       "Entendiendo el tipo de indicente, asume que se esta haciendo una reclamacion de siniestros" +
-      "Si es un gasto medico, deberas solicitar una boleta o factura del gasto"
+      "Si es un gasto medico, deberas solicitar una boleta o factura del gasto" +
+      "Responde en un maximo de 140 caracteres"
   },
-  {"role":"user","content":"El usuario llamado Angel tiene la poliza de seguros llamada 'Seguro Colectivo', que cubre Gastos Medicos y Hospitalización."},
+  {"role":"system","content":"El usuario llamado Angel tiene la poliza de seguros llamada 'Seguro Colectivo', que cubre Gastos Medicos y Hospitalización."},
   {"role": "assistant", "content": "Hola Angel, que pena saber que tienes que ocupar el seguro. Cuéntame que es lo que sucedió?"}
 ]
 
