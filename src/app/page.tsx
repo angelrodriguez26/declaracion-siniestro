@@ -1,9 +1,10 @@
 "use client";
-import styles from './page.module.css'
+import './page.module.css'
 import { Configuration, CreateChatCompletionResponse, OpenAIApi } from 'openai';
 import { useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { ChatCompletionRequestMessage } from 'openai/api';
+import Image from 'next/image';
 
 const initialMessages: ChatCompletionRequestMessage[] = [
   {"role": "system", "content": "Eres un asistente inteligente que actúa como un experto en reclamaciones de siniestros para una empresa de seguros. " +
@@ -11,24 +12,31 @@ const initialMessages: ChatCompletionRequestMessage[] = [
       "Esto incluye la identificación del tipo de incidente y la fecha en que ocurrió. " +
       "A partir de esta información, debes determinar si el incidente descrito está cubierto por alguna de las pólizas de seguro disponibles: Cáncer, Gastos Médicos y Hospitalización." +
       "Un incidente podría estar cubierto por una o más de estas categorías. " +
-      "Debes proporcionar una respuesta empática y útil, ayudando al usuario a comprender qué coberturas podrían aplicarse en su caso. " +
+      "Debes proporcionar una respuesta empática, útil e informal, ayudando al usuario a comprender qué coberturas podrían aplicarse en su caso. " +
       "Solo puedes hacer 1 pregunta por respuesta y las preguntas tienen que ser sencillas y directas." +
-      "El usuario llamado Angel tiene la poliza de seguros llamada 'ABC', que cubre Gastos Medicos y Hospitalización." +
+      "Las respuestas que proporciones deben ser lo mas cortas posibles" +
       "Gastos medicos son todo aquello que involucra la Hospitalización, y el usuario puede ser hospitalizado por desmayos, fracturas y enfermedades. " +
       "Al final, cuando el usuario te de toda la informacion, si es Hospitalizacion, dile 'Por favor adjunta documento de epicrisis'" +
       "Si el usuario tiene Cancer, respondele de manera empatica y amorosa, como si fueses una abuela, que su poliza no cubre eso" +
-      "Si el usuario te pregunta algo que no tenga que ver con su incidente o declaracion de seguro, dile que no lo puedes ayudar con eso"},
+      "Si el usuario te pregunta algo que no tenga que ver con su incidente o declaracion de seguro, dile que no lo puedes ayudar con eso" +
+      "El usuario puede comenzar el proceso de reclamacion de siniestro a traves de esta conversacion" +
+      "La cobertura de hospitalizacion tiene un capital asegurado maximo de 160 mil pesos Chilenos" +
+      "Entendiendo el tipo de indicente, asume que se esta haciendo una reclamacion de siniestros" +
+      "Si es un gasto medico, deberas solicitar una boleta o factura del gasto"
+  },
+  {"role":"user","content":"El usuario llamado Angel tiene la poliza de seguros llamada 'Seguro Colectivo', que cubre Gastos Medicos y Hospitalización."},
+  {"role": "assistant", "content": "Hola Angel, que pena saber que tienes que ocupar el seguro. Cuéntame que es lo que sucedió?"}
 ]
 
 const Home = () => {
 
   const [text, setText] = useState<string>('');
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>(initialMessages);
-  const [displayedMessages, setDisplayedMessages] = useState<ChatCompletionRequestMessage[]>([]);
+  const [displayedMessages, setDisplayedMessages] = useState<ChatCompletionRequestMessage[]>([{"role": "assistant", "content": "Hola Angel, que pena saber que tienes que ocupar el seguro. Cuéntame que es lo que sucedió?"}]);
 
   const getOpenAi = () => {
     const configuration = new Configuration({
-      apiKey: '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',
+      apiKey: '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',
       organization: "org-d6Cz2ergvmPzRrWLXsI0QFyu",
     });
 
@@ -57,33 +65,35 @@ const Home = () => {
   }
 
   return (
-    <main>
-      <div>fake gpt</div>
-      <input onChange={(e) => { setText(e.target.value) }} value={text}/>
-      <button onClick={getCompletion}>completar</button>
-      <div>
-        {displayedMessages.map((message, i) => (
-          <div key={i + 'message'}>{message.content}</div>
-        ))}
+    <>
+      <Image
+        src={'/bg-2.svg'}
+        fill={true}
+        objectFit="cover"
+        quality={100}
+        alt={'image'}
+        style={{marginTop: '1px'}}
+      />
+      <div style={{position: 'relative'}}>
+        <div className={'avatar'}>
+          <Image src={'/avatar.png'} width={177} height={280} alt={'image'}/>
+        </div>
+        <section>
+          {displayedMessages.map((message, i) => (
+            <p
+              className={`chat-${message.role === 'user' ? 'user' : 'bot'}`}
+              key={i + '-message'}
+            >{message.content}</p>
+          ))}
+        </section>
       </div>
-    </main>
-  )
+      <div className="text-chat">
+        <input type="text" placeholder="Escribe aqui..." required value={text} onChange={(e) => {setText(e.target.value)}}/>
+        <input type="submit" value="Enviar" onClick={getCompletion}/>
+      </div>
+    </>
+  );
 
-//     <body>
-//     <div className="avatar"></div>
-//   <section>
-//     <p className="chat-bot">Hola Angel, que pena saber que tienes que ocupar el seguro. Cuéntame que es lo que
-//       sucedió?</p>
-//     <p className="chat-user">Ayer andando en bici me cai y me rompi el brazo :(</p>
-//     <p className="chat-bot">Uff que dolor, ya mira podemos utilizar tu cobertura de gastos medicos y
-//       hospitalización. Para eso necesitamos algunos documentos</p>
-//     <p className="chat-bot">Epicrisis firmada por tu medico</p>
-//   </section>
-//   <div className="text-chat">
-//     {/*<input type="text" placeholder="Escribe aqui..." required>*/}
-//     <input type="submit" value="Enviar" />
-//   </div>
-// </body>
 }
 
 export default Home
