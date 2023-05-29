@@ -4,7 +4,10 @@ import { Configuration, CreateChatCompletionResponse, OpenAIApi } from 'openai';
 import { useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { ChatCompletionRequestMessage } from 'openai/api';
+import { initializeApp } from "firebase/app";
 import Image from 'next/image';
+import { Console } from 'console';
+
 
 const initialMessages: ChatCompletionRequestMessage[] = [
   {"role": "system", "content": "Eres un asistente inteligente que actúa como un experto en reclamaciones de siniestros para una empresa de seguros. " +
@@ -35,11 +38,13 @@ const Home = () => {
   const [text, setText] = useState<string>('');
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>(initialMessages);
   const [displayedMessages, setDisplayedMessages] = useState<ChatCompletionRequestMessage[]>([{"role": "assistant", "content": "Hola Angel, que pena saber que tienes que ocupar el seguro. Cuéntame que es lo que sucedió?"}]);
+  const apiKey = process.env.NEXT_PUBLIC_GPT_API_KEY;
+  const organizationId = process.env.NEXT_PUBLIC_GPT_ORGANIZATION_ID;
 
   const getOpenAi = () => {
     const configuration = new Configuration({
-      apiKey: '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',
-      organization: "org-d6Cz2ergvmPzRrWLXsI0QFyu",
+      apiKey: apiKey,
+      organization: organizationId,
     });
 
     return new OpenAIApi(configuration);
@@ -62,8 +67,8 @@ const Home = () => {
 
     const newGptMessage = completion.data.choices[0].message;
 
-    setMessages([...messagesAux, newGptMessage]);
-    setDisplayedMessages((prev) => [...prev, newGptMessage]);
+    setMessages([...messagesAux!, newGptMessage!]);
+    setDisplayedMessages((prev) => [...prev, newGptMessage!]);
   }
 
   return (
