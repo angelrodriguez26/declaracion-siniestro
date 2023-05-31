@@ -7,6 +7,7 @@ import { ChatCompletionRequestMessage } from 'openai/api';
 import { initializeApp } from "firebase/app";
 import Image from 'next/image';
 import { Console } from 'console';
+import { Button } from '@mui/material';
 
 
 const initialMessages: ChatCompletionRequestMessage[] = [
@@ -96,7 +97,15 @@ const Home = () => {
       </div>
       <div className="text-chat">
         <input type="text" placeholder="Escribe aqui..." required value={text} onChange={(e) => {setText(e.target.value)}}/>
-        <input type="submit" value="Enviar" onClick={getCompletion}/>
+        {/*<input type="submit" value="Enviar" onClick={getCompletion}/>*/}
+        <Button variant={'contained'} sx={{
+          backgroundColor: '#00FF68',
+          color: 'black',
+          fontSize: '18px',
+          height: '46px',
+          borderRadius: '50px',
+          marginLeft: 1
+        }}>Enviar</Button>
       </div>
     </>
   );
