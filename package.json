@@ -22,6 +22,10 @@
     "openai": "^3.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-json-editor-ajrm": "^2.5.14",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/react-json-editor-ajrm": "^2.5.3"
   }
 }
