@@ -1,10 +1,10 @@
 import { PromptContext } from '@/context/PromptContext';
-import { useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { ChatCompletionRequestMessage } from 'openai/api';
 import { ALL_PROMPTS, Prompt } from '@/app/prompts';
 
 
-const PromptContextProvider = ({children}) => {
+const PromptContextProvider = ({children}: PropsWithChildren) => {
   const [prompts, setPrompts] = useState<Prompt[]>(ALL_PROMPTS)
   const [backToAdmin, setBackToAdmin] = useState<boolean>(false)
 

@@ -42,6 +42,7 @@ const Admin = () => {
         <AccordionDetails>
           <JSONInput
             locale={locale}
+            // @ts-ignore
             onChange={(value) => {
               if(value.error) {
                 setHasError(true);

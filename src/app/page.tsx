@@ -8,9 +8,10 @@ import Image from "next/image";
 import { Button, Grid, Skeleton } from "@mui/material";
 import { usePromptContext } from '@/context/PromptContext';
 import { useRouter } from 'next/navigation';
+import { ALL_PROMPTS } from '@/app/prompts';
 
 
-const Home = ({searchParams}) => {
+const Home = ({searchParams}: { searchParams: { [key: string]: string | string[] | undefined };}) => {
   const [text, setText] = useState<string>("");
   const [messages, setMessages] =
     useState<ChatCompletionRequestMessage[]>([]);
@@ -24,9 +25,10 @@ const Home = ({searchParams}) => {
   const router = useRouter();
 
   useEffect(() => {
-    const userPrompts = prompts.find(prompt => prompt.id === (searchParams.userId ?? "1")).prompts;
-    setMessages(userPrompts);
-    setDisplayedMessages([userPrompts[userPrompts.length - 1]]);
+    const userPrompts = prompts.find(prompt => prompt.id === (searchParams.userId ?? "1"));
+    const promptsToUse = userPrompts ??  ALL_PROMPTS[0];
+    setMessages(promptsToUse.prompts);
+    setDisplayedMessages([promptsToUse.prompts[promptsToUse.prompts.length - 1]]);
   }, [])
 
   useEffect(() => {
