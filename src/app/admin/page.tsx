@@ -15,7 +15,7 @@ const Admin = () => {
 
   const handleOnClick = (userId: string) => {
     handleSetBackToAdmin(true);
-    router.push(`/?userId=${userId}`)
+    router.push(`/user/${userId}/`)
   }
 
   return <Container sx={{pt: 5, px: 3}}>

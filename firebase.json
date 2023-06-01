@@ -9,6 +9,30 @@
     ],
     "rewrites": [
       {
+        "source": "/admin",
+        "destination": "/admin/index.html"
+      },
+      {
+        "source": "/user/1/",
+        "destination": "/user/1/index.html"
+      },
+      {
+        "source": "/user/2/",
+        "destination": "/user/2/index.html"
+      },
+      {
+        "source": "/user/3/",
+        "destination": "/user/3/index.html"
+      },
+      {
+        "source": "/user/4/",
+        "destination": "/user/4/index.html"
+      },
+      {
+        "source": "/user/5/",
+        "destination": "/user/5/index.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
