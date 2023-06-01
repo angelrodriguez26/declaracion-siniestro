@@ -126,7 +126,7 @@ section {
 }
 
 input{
-    width: 80%;
+    width: 100%;
     box-shadow: 0 3px 20px rgba(1,41,112,.12);
     font-size: 14px;
     border-radius: 24px;
@@ -159,8 +159,8 @@ input[type="submit"]{
 .text-chat{
     position: fixed;
     bottom: 10px;
-    width: 95%;
     padding-left: 3%;
+    padding-right: 6%;
 }
 p{
     color: white;
